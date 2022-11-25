@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+    dev:
+        image: '${MVN_BUILDER}'
+        container_name: '${CONTAINER_NAME}'
+        ports:
+            -   '8080:8080'
+        volumes:
+            -   './src:build/src'
+            -   './db:/build/db'
+            -   './target:/build/target'
+            -   './logs:/build/logs'
+        command: 'mvn spring:boot:run -Drun.jvmArguments="-Xmx512m" -Dmaven.test.skip=true'
+    deploy:
+        build:
+            context: .
+            dockerfile: Dockerfile-Deploy
+            args:
+                MVN_BUILDER: '${MVN_BUILDER}'
+        image: '${DEPLOYMENT_IMAGE}'
+        container_name: '${CONTAINER_NAME}'
+        ports:
+            -   '8080:8080'
+    maven:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: '${MVN_BUILDER}'
+        container_name: '${CONTAINER_NAME}'
