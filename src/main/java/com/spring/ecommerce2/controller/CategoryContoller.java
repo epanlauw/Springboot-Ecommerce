@@ -5,6 +5,7 @@ import com.spring.ecommerce2.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Pageable;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -16,8 +17,8 @@ public class CategoryContoller {
     private CategoryService categoryService;
 
     @GetMapping("/categories")
-    public List<Category> getAllCategories() {
-        return categoryService.getAllCategories();
+    public List<Category> getAllCategories(Pageable page) {
+        return categoryService.getAllCategories(page).toList();
     }
 
     @GetMapping("/categories/{id}")

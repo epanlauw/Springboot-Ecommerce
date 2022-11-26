@@ -4,6 +4,9 @@ import com.spring.ecommerce2.entity.Category;
 import com.spring.ecommerce2.exception.ResourceNotFoundException;
 import com.spring.ecommerce2.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +18,8 @@ public class CategoryServiceImpl implements CategoryService{
     private CategoryRepository categoryRepo;
 
     @Override
-    public List<Category> getAllCategories() {
-        return categoryRepo.findAll();
+    public Page<Category> getAllCategories(Pageable page) {
+        return categoryRepo.findAll(page);
     }
 
     @Override
