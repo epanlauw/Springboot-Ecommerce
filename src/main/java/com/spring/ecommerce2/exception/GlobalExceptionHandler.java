@@ -67,6 +67,30 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorObject, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(FileStorageException.class)
+    public ResponseEntity<ErrorObject> handleFileStorageException(FileStorageException ex, WebRequest request) {
+
+        ErrorObject errorObject = new ErrorObject();
+
+        errorObject.setStatusCode(HttpStatus.INSUFFICIENT_STORAGE.value());
+        errorObject.setMessage(ex.getMessage());
+        errorObject.setTimestamp(new Date());
+
+        return new ResponseEntity<>(errorObject, HttpStatus.INSUFFICIENT_STORAGE);
+    }
+
+    @ExceptionHandler(FileNotFoundException.class)
+    public ResponseEntity<ErrorObject> handleFileNotFoundException(FileNotFoundException ex, WebRequest request) {
+
+        ErrorObject errorObject = new ErrorObject();
+
+        errorObject.setStatusCode(HttpStatus.NOT_FOUND.value());
+        errorObject.setMessage(ex.getMessage());
+        errorObject.setTimestamp(new Date());
+
+        return new ResponseEntity<>(errorObject, HttpStatus.NOT_FOUND);
+    }
+
     @Override
     @NonNull
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
