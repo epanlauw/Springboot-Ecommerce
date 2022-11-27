@@ -1,5 +1,6 @@
 package com.spring.ecommerce2.entity;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,13 +26,15 @@ public class OrderItem implements Serializable {
     private Long id;
 
     @JoinColumn(name = "order_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIncludeProperties(value = {"id"})
     private Order order;
 
     @JoinColumn(name = "product_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIncludeProperties(value = {"id"})
     private Product product;
 
     @Column(name = "order_item_desc")

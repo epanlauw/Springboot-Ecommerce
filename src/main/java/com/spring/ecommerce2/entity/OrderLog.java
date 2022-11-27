@@ -1,9 +1,12 @@
 package com.spring.ecommerce2.entity;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -22,10 +25,14 @@ public class OrderLog implements Serializable {
 
     @JoinColumn(name = "order_id", nullable = false)
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIncludeProperties(value = {"id"})
     private Order order;
 
     @JoinColumn(name = "user_id", nullable = false)
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIncludeProperties(value = {"id"})
     private User user;
 
     @Column(name = "log_type")

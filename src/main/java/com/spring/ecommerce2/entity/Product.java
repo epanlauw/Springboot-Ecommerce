@@ -1,5 +1,6 @@
 package com.spring.ecommerce2.entity;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,8 +45,9 @@ public class Product implements Serializable {
     private Double stock;
 
     @JoinColumn(name = "category_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIncludeProperties(value = {"id"})
     private Category category;
 
     @Column(name = "created_at", nullable = false, updatable = false)
