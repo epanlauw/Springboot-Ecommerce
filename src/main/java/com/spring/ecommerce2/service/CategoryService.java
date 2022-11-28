@@ -17,4 +17,6 @@ public interface CategoryService {
     Category updateCategory(Long id, Category category);
 
     void deleteCategoryById(Long id);
+
+    List<Category> readByName(String keyword, Pageable page);
 }

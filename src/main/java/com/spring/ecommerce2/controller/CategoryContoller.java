@@ -42,4 +42,9 @@ public class CategoryContoller {
     public void deleteCategoryById(@PathVariable Long id) {
         categoryService.deleteCategoryById(id);
     }
+
+    @GetMapping("/categories/name")
+    public List<Category> getCategoryByName(@RequestParam String keyword, Pageable page) {
+        return categoryService.readByName(keyword, page);
+    }
 }

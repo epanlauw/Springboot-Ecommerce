@@ -56,4 +56,9 @@ public class CategoryServiceImpl implements CategoryService{
         Category category = getCategoryById(id);
         categoryRepo.deleteById(category.getId());
     }
+
+    @Override
+    public List<Category> readByName(String keyword, Pageable page) {
+        return categoryRepo.findByNameContainingIgnoreCase(keyword, page).toList();
+    }
 }
