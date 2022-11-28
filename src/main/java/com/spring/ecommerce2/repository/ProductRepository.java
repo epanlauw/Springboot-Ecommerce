@@ -18,5 +18,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // SELECT * FROM tbl_product WHERE category_id=?
     Page<Product> findByCategoryId(Long categoryId, Pageable page);
 
+    // SELECT * FROM tbl_product WHERE stock BETWEEN 'minStock' AND 'maxStock'
+    Page<Product> findByStockBetween(Double minStock, Double maxStock, Pageable page);
+
     Product findFirstByOrderByPriceDesc();
+
+    Product findFirstByOrderByStockDesc();
 }

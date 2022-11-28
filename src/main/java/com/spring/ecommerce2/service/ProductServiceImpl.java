@@ -78,7 +78,8 @@ public class ProductServiceImpl implements ProductService{
         }
 
         if(maxPrice == null) {
-            maxPrice = productRepo.findFirstByOrderByPriceDesc().getPrice();
+            Product existingProduct = productRepo.findFirstByOrderByPriceDesc();
+            maxPrice = existingProduct.getPrice();
         }
 
         return productRepo.findByPriceBetween(minPrice, maxPrice, page).toList();
@@ -88,6 +89,21 @@ public class ProductServiceImpl implements ProductService{
     @Cacheable(unless = "#result == null")
     public List<Product> readByCategoryId(Long categoryId, Pageable page) {
         return productRepo.findByCategoryId(categoryId, page).toList();
+    }
+
+    @Override
+    @Cacheable(unless = "#result == null")
+    public List<Product> readByStock(Double minStock, Double maxStock, Pageable page) {
+        if(minStock == null) {
+            minStock = 0.0;
+        }
+
+        if(maxStock == null) {
+            Product existingProduct = productRepo.findFirstByOrderByStockDesc();
+            maxStock = existingProduct.getStock();
+        }
+
+        return productRepo.findByStockBetween(minStock, maxStock, page).toList();
     }
 
 

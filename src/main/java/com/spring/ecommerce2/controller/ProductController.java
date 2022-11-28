@@ -58,4 +58,10 @@ public class ProductController {
     public List<Product> getProductByCategory(@RequestParam Long categoryId, Pageable page) {
         return productService.readByCategoryId(categoryId, page);
     }
+
+    @GetMapping("/products/stock")
+    public List<Product> getProductByStock(@RequestParam(required = false) Double minStock,
+                                           @RequestParam(required = false) Double maxStock, Pageable page) {
+        return productService.readByStock(minStock, maxStock, page);
+    }
 }

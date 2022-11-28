@@ -24,4 +24,6 @@ public interface ProductService {
     List<Product> readByPrice(BigDecimal minPrice, BigDecimal maxPrice, Pageable page);
 
     List<Product> readByCategoryId(Long categoryId, Pageable page);
+
+    List<Product> readByStock(Double minStock, Double maxStock, Pageable page);
 }
