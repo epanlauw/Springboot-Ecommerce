@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -40,5 +41,21 @@ public class ProductController {
     @DeleteMapping("/products/{id}")
     public void deleteProductById(@PathVariable Long id) {
         productService.deleteProductById(id);
+    }
+
+    @GetMapping("/products/name")
+    public List<Product> getProductByName(@RequestParam String keyword, Pageable page) {
+        return productService.readByName(keyword, page);
+    }
+
+    @GetMapping("/products/price")
+    public List<Product> getProuctByPrice(@RequestParam(required = false) BigDecimal minPrice,
+                                          @RequestParam(required = false) BigDecimal maxPrice, Pageable page) {
+        return productService.readByPrice(minPrice, maxPrice, page);
+    }
+
+    @GetMapping("/products/category")
+    public List<Product> getProductByCategory(@RequestParam Long categoryId, Pageable page) {
+        return productService.readByCategoryId(categoryId, page);
     }
 }
