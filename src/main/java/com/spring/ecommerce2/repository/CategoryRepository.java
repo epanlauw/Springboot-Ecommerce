@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     
-    // SELECT FROM * tbl_category WHERE name LIKE '%keyword%'
+    // SELECT * FROM tbl_category WHERE name LIKE '%keyword%'
     Page<Category> findByNameContainingIgnoreCase(String keyword, Pageable page);
 }

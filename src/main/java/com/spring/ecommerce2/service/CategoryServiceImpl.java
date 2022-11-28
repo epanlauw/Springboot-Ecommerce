@@ -58,6 +58,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
+    @Cacheable(unless = "#result == null")
     public List<Category> readByName(String keyword, Pageable page) {
         return categoryRepo.findByNameContainingIgnoreCase(keyword, page).toList();
     }
