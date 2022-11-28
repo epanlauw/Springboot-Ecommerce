@@ -21,7 +21,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nama;
+    private String name;
 
     @Column(unique = true)
     private String email;
@@ -32,6 +32,7 @@ public class User implements Serializable {
     private String address;
     private String hp;
     private String roles;
+    private String images;
     private Boolean isActive;
 
     @Column(name = "created_at", nullable = false, updatable = false)
