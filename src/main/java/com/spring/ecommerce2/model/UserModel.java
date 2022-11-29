@@ -22,7 +22,7 @@ public class UserModel {
 
     private String address;
     private String hp;
-    private String roles;
+    private String roles = "user";
     private String images;
     private Boolean isActive = true;
 }
