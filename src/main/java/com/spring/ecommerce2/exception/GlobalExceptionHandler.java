@@ -26,7 +26,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorObject> handleItemExistsException(ItemAlreadyExistsException ex, WebRequest request) {
         ErrorObject errorObject = new ErrorObject();
 
-        errorObject.setStatusCode(HttpStatus.CONTINUE.value());
+        errorObject.setStatusCode(HttpStatus.CONFLICT.value());
         errorObject.setMessage(ex.getMessage());
         errorObject.setTimestamp(new Date());
 
