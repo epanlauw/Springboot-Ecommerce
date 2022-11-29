@@ -5,11 +5,13 @@ import com.spring.ecommerce2.model.UserModel;
 
 public interface UserService {
 
-    User readUser(Long id);
+    User readUser();
 
     User createUser(UserModel user);
 
-    User updateUser(UserModel user, Long id);
+    User updateUser(UserModel user);
 
-    void deleteUser(Long id);
+    void deleteUser();
+
+    User getLoggedInUser();
 }

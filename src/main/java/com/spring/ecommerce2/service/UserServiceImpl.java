@@ -7,6 +7,9 @@ import com.spring.ecommerce2.model.UserModel;
 import com.spring.ecommerce2.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +23,10 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepo;
 
     @Override
-    public User readUser(Long id) {
-        return userRepo.findById(id)
-                            .orElseThrow(() -> new ResourceNotFoundException("User not found for the id: " + id));
+    public User readUser() {
+        Long userId = getLoggedInUser().getId();
+        return userRepo.findById(userId)
+                            .orElseThrow(() -> new ResourceNotFoundException("User not found for the id: " + userId));
     }
 
     @Override
@@ -39,8 +43,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User updateUser(UserModel user, Long id) {
-        User existingUser = readUser(id);
+    public User updateUser(UserModel user) {
+        User existingUser = readUser();
 
         existingUser.setName(user.getName() != null ? user.getName() : existingUser.getName());
         existingUser.setEmail(user.getEmail() != null ? user.getEmail() : existingUser.getEmail());
@@ -53,9 +57,19 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void deleteUser(Long id) {
-        User existingUser= readUser(id);
+    public void deleteUser() {
+        User existingUser= readUser();
 
         userRepo.delete(existingUser);
+    }
+
+    @Override
+    public User getLoggedInUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        return userRepo.findByEmail(email)
+                        .orElseThrow(() -> new UsernameNotFoundException("User not found for the email: " + email));
     }
 }
